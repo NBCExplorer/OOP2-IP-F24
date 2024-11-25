@@ -1,4 +1,4 @@
 package com.example.oop2ipf24.Model;
 
-public class Movie {
+public class Movie extends Showtime {
 }
