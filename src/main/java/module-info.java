@@ -1,6 +1,7 @@
 module com.example.oop2ipf24 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.example.oop2ipf24 to javafx.fxml;
