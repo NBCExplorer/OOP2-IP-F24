@@ -1,12 +1,12 @@
 package com.example.oop2ipf24.Controllers;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.fxml.FXML;
 
 import java.io.IOException;
 
@@ -22,6 +22,9 @@ public class ManagerHomeController {
     private ListView<String> showtimeList;
 
     @FXML
+    private Button addButton;
+
+    @FXML
     private Button removeButton;
 
     @FXML
@@ -33,39 +36,56 @@ public class ManagerHomeController {
 
         // Set action for the remove button
         removeButton.setOnAction(event -> showDeleteConfirmation());
+
+        // Set action for the add button
+        addButton.setOnAction(event -> showAddPage());
     }
 
     private void showDeleteConfirmation() {
         try {
-            // Load the Delete Confirmation FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/delete-verification.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows until closed
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Delete Confirmation");
 
-            // Access the DeleteVerifController to set up actions
             DeleteVerifController controller = loader.getController();
             controller.setOnYes(() -> {
-                deleteSelectedItem(); // Delete item if "Yes" is clicked
-                stage.close();        // Close the confirmation window
+                deleteSelectedItem();
+                stage.close();
             });
-            controller.setOnNo(stage::close); // Close the window if "No" is clicked
+            controller.setOnNo(stage::close);
 
-            stage.showAndWait(); // Show the dialog and wait for user interaction
+            stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void deleteSelectedItem() {
-        // Remove the selected item from the respective ListView
         if (movieList.getSelectionModel().getSelectedItem() != null) {
             movieList.getItems().remove(movieList.getSelectionModel().getSelectedItem());
         } else if (roomList.getSelectionModel().getSelectedItem() != null) {
             roomList.getItems().remove(roomList.getSelectionModel().getSelectedItem());
         } else if (showtimeList.getSelectionModel().getSelectedItem() != null) {
             showtimeList.getItems().remove(showtimeList.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    private void showAddPage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/add-function.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Add Item");
+
+            AddController controller = loader.getController();
+            controller.setLists(movieList, roomList, showtimeList); // Pass the existing lists to AddController
+
+            stage.showAndWait(); // Wait for user interaction before continuing
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
