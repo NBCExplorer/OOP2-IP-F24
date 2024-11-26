@@ -9,19 +9,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LoginController {
 
-    @FXML
-    private Button loginButton;
+
 
     @FXML
     private TextField usernameField;
@@ -29,13 +29,13 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    // List of users (Manager and Client) for login validation
-    private final List<User> users = new ArrayList<>();
+    // Map to store users by username
+    public static Map<String, User> users = new HashMap<>();
 
     public LoginController() {
         // Adding sample Manager and Client users
-        users.add(new Manager("manager1", "password1"));
-        users.add(new Client("client1", "password2"));
+        users.put("manager1", new Manager("manager1", "password1"));
+        users.put("client1", new Client("client1", "password2"));
     }
 
     /**
@@ -71,13 +71,13 @@ public class LoginController {
      * @return the authenticated User object or null if authentication fails
      */
     private User authenticateUser(String username, String password) {
-        for (User user : users) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return user;
-            }
+        User user = users.get(username);  // Get user by username
+        if (user != null && user.getPassword().equals(password)) {
+            return user;  // Authentication successful
         }
-        return null; // Authentication failed
+        return null;  // Authentication failed
     }
+
 
     /**
      * Navigates to a specific view.

@@ -20,8 +20,8 @@ public class Manager implements User {
     }
 
     @Override
-    public String getRole() {
-        return "MANAGER";
+    public void performRoleSpecificAction() {
+        // Implement manager-specific actions here
     }
 
     public void manageTheatre() {
