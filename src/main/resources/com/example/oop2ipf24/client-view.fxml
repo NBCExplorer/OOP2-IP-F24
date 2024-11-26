@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.oop2ipf24.ClientView"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop2ipf24.Controllers.ClientController">
+    <children>
+        <!-- Title Label -->
+        <Label layoutX="125.0" layoutY="20.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Showtimes" />
 
+        <!-- Table for Showtimes -->
+        <TableView fx:id="showtimeTable" layoutX="25.0" layoutY="60.0" prefHeight="250.0" prefWidth="300.0">
+            <columns>
+                <!-- Column for Show -->
+                <TableColumn fx:id="showColumn" prefWidth="150.0" text="Show" />
+                <!-- Column for Time -->
+                <TableColumn fx:id="timeColumn" prefWidth="150.0" text="Time" />
+            </columns>
+        </TableView>
+
+        <!-- Buttons -->
+        <Button fx:id="backButton" layoutX="60.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: #f0f0f0;" text="Back" />
+        <Button fx:id="buyTicketButton" layoutX="200.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Buy Ticket" />
+    </children>
 </AnchorPane>
