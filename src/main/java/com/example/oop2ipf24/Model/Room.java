@@ -10,4 +10,12 @@ public class Room extends Showtime {
         super(pDate, pTime);
         this.aRoomNumber = pRoomNumber;
     }
+
+    public int getRoomNumber() {
+        return this.aRoomNumber;
+    }
+
+    public void setRoomNumber(int pRoomNumber) {
+        this.aRoomNumber = pRoomNumber;
+    }
 }
