@@ -10,4 +10,12 @@ public class Movie extends Showtime {
         super(pTime, pDate);
         this.aName = pName;
     }
+
+    public String getName() {
+        return this.aName;
+    }
+
+    public void setName(String pName) {
+        this.aName = pName;
+    }
 }
