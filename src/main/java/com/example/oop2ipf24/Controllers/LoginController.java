@@ -88,17 +88,22 @@ public class LoginController {
      */
     private void navigateTo(String fxmlFile, String title, ActionEvent event) {
         try {
+            // Debugging: Print the file path
+            System.out.println(getClass().getResource(fxmlFile));
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle(title);
+            stage.show(); // Ensure the stage is shown
         } catch (IOException e) {
             e.printStackTrace();
             showError("Failed to load the requested view: " + fxmlFile);
         }
     }
+
 
     /**
      * Displays an error message in an alert dialog.
@@ -118,8 +123,9 @@ public class LoginController {
      */
     @FXML
     private void onSignUp(ActionEvent event) {
-        showError("Sign-Up functionality is not yet implemented.");
+        navigateTo("/com/example/oop2ipf24/signup-view.fxml", "Sign Up", event);
     }
+
 
     @FXML
     private void onClose(ActionEvent event) {

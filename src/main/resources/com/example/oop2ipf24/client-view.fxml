@@ -9,17 +9,15 @@
       <Label layoutX="125.0" layoutY="20.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Showtimes" />
 
       <!-- Table for Showtimes -->
-      <TableView fx:id="showtimeTable" layoutX="25.0" layoutY="60.0" prefHeight="250.0" prefWidth="300.0">
+      <TableView fx:id="showtimeTable">
          <columns>
-            <!-- Column for Show -->
-            <TableColumn fx:id="showColumn" prefWidth="150.0" text="Show" />
-            <!-- Column for Time -->
-            <TableColumn fx:id="timeColumn" prefWidth="150.0" text="Time" />
+            <TableColumn fx:id="timeColumn" text="Time" />
+            <TableColumn fx:id="dateColumn" text="Date" />
          </columns>
       </TableView>
 
       <!-- Buttons -->
-      <Button fx:id="backButton" layoutX="60.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: #f0f0f0;" text="Back" />
-      <Button fx:id="buyTicketButton" layoutX="200.0" layoutY="330.0" mnemonicParsing="false" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Buy Ticket" />
+      <Button fx:id="backButton" layoutX="272.0" layoutY="244.0" mnemonicParsing="false" style="-fx-background-color: #f0f0f0;" text="Back" />
+      <Button fx:id="buyTicketButton" layoutX="257.0" layoutY="149.0" mnemonicParsing="false" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Buy Ticket" />
    </children>
 </AnchorPane>
