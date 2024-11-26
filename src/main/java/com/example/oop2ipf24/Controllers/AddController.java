@@ -9,58 +9,44 @@ import javafx.stage.Stage;
 public class AddController {
 
     @FXML
-    private TextField movieText;
+    private TextField movieText; // Input field for movie name
 
     @FXML
-    private TextField roomText;
+    private Button addFunctions; // Button to add the movie
 
     @FXML
-    private TextField timeText;
+    private Button exitaddButton; // Button to exit without adding
 
-    @FXML
-    private Button addFunctions;
-
-    @FXML
-    private Button exitaddButton;
-
-    private ListView<String> movieList;
-    private ListView<String> roomList;
-    private ListView<String> showtimeList;
+    private ListView<String> movieList; // Reference to the movie list from ManagerHomeController
 
     @FXML
     public void initialize() {
-        // Add button action
+        // Add button action: Add the movie to the list and close the window
         addFunctions.setOnAction(event -> {
-            // Add values from text fields to the respective lists
-            if (!movieText.getText().trim().isEmpty()) {
+            if (movieList != null && !movieText.getText().trim().isEmpty()) {
                 movieList.getItems().add(movieText.getText().trim());
             }
-            if (!roomText.getText().trim().isEmpty()) {
-                roomList.getItems().add(roomText.getText().trim());
-            }
-            if (!timeText.getText().trim().isEmpty()) {
-                showtimeList.getItems().add(timeText.getText().trim());
-            }
-            // Close the Add window after adding items
-            ((Stage) addFunctions.getScene().getWindow()).close();
+            closeWindow();
         });
 
-        // Exit button action
-        exitaddButton.setOnAction(event -> {
-            ((Stage) exitaddButton.getScene().getWindow()).close();
-        });
+        // Exit button action: Close the window without adding
+        exitaddButton.setOnAction(event -> closeWindow());
     }
 
     /**
-     * Set the existing ListViews for movies, rooms, and showtimes.
+     * Sets the reference to the movie ListView from the main controller.
      *
-     * @param movieList    ListView for movies
-     * @param roomList     ListView for rooms
-     * @param showtimeList ListView for showtimes
+     * @param movieList The ListView to update with the new movie
      */
-    public void setLists(ListView<String> movieList, ListView<String> roomList, ListView<String> showtimeList) {
+    public void setMovieList(ListView<String> movieList) {
         this.movieList = movieList;
-        this.roomList = roomList;
-        this.showtimeList = showtimeList;
+    }
+
+    /**
+     * Closes the current window.
+     */
+    private void closeWindow() {
+        Stage stage = (Stage) addFunctions.getScene().getWindow();
+        stage.close();
     }
 }

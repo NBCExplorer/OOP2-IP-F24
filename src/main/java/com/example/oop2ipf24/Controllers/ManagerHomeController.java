@@ -13,77 +13,74 @@ import java.io.IOException;
 public class ManagerHomeController {
 
     @FXML
-    private ListView<String> movieList;
+    private ListView<String> movieList; // List of movies displayed
 
     @FXML
-    private ListView<String> roomList;
+    private Button removeMovieButton; // Button to remove movies
 
     @FXML
-    private ListView<String> showtimeList;
-
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private Button removeButton;
+    private Button addMovieButton; // Button to add movies
 
     @FXML
     public void initialize() {
-        // Example items for the ListViews
-        movieList.getItems().addAll("Movie 1", "Movie 2", "Movie 3");
-        roomList.getItems().addAll("Room A", "Room B", "Room C");
-        showtimeList.getItems().addAll("10:00 AM", "12:00 PM", "3:00 PM");
+        // Set up the remove button to trigger the delete confirmation
+        removeMovieButton.setOnAction(event -> openDeleteConfirmationWindow());
 
-        // Set action for the remove button
-        removeButton.setOnAction(event -> showDeleteConfirmation());
-
-        // Set action for the add button
-        addButton.setOnAction(event -> showAddPage());
+        // Set up the add button to open the Add Movie window
+        addMovieButton.setOnAction(event -> openAddMovieWindow());
     }
 
-    private void showDeleteConfirmation() {
+    /**
+     * Opens the delete confirmation window.
+     */
+    private void openDeleteConfirmationWindow() {
+        // Ensure a movie is selected
+        String selectedMovie = movieList.getSelectionModel().getSelectedItem();
+        if (selectedMovie == null) {
+            return; // Do nothing if no movie is selected
+        }
+
         try {
+            // Load the DeleteVerifController FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/delete-verification.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Delete Confirmation");
+            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
 
-            DeleteVerifController controller = loader.getController();
-            controller.setOnYes(() -> {
-                deleteSelectedItem();
-                stage.close();
+            // Set up the controller with actions
+            DeleteVerifController deleteVerifController = loader.getController();
+            deleteVerifController.setOnYes(() -> {
+                // Remove the selected movie from the list
+                movieList.getItems().remove(selectedMovie);
+                stage.close(); // Close the confirmation window
             });
-            controller.setOnNo(stage::close);
 
-            stage.showAndWait();
+            deleteVerifController.setOnNo(stage::close); // Close the confirmation window on "No"
+
+            stage.setTitle("Delete Confirmation");
+            stage.showAndWait(); // Wait until the confirmation window is closed
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void deleteSelectedItem() {
-        if (movieList.getSelectionModel().getSelectedItem() != null) {
-            movieList.getItems().remove(movieList.getSelectionModel().getSelectedItem());
-        } else if (roomList.getSelectionModel().getSelectedItem() != null) {
-            roomList.getItems().remove(roomList.getSelectionModel().getSelectedItem());
-        } else if (showtimeList.getSelectionModel().getSelectedItem() != null) {
-            showtimeList.getItems().remove(showtimeList.getSelectionModel().getSelectedItem());
-        }
-    }
-
-    private void showAddPage() {
+    /**
+     * Opens the Add Movie window.
+     */
+    private void openAddMovieWindow() {
         try {
+            // Load the AddController FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/add-function.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Add Item");
+            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
 
-            AddController controller = loader.getController();
-            controller.setLists(movieList, roomList, showtimeList); // Pass the existing lists to AddController
+            // Pass the current movie list to the AddController
+            AddController addController = loader.getController();
+            addController.setMovieList(movieList);
 
-            stage.showAndWait(); // Wait for user interaction before continuing
+            stage.setTitle("Add Movie");
+            stage.showAndWait(); // Wait until the Add window is closed
         } catch (IOException e) {
             e.printStackTrace();
         }
