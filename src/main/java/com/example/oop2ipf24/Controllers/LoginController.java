@@ -55,7 +55,7 @@ public class LoginController {
             if (authenticatedUser instanceof Manager) {
                 navigateTo("/com/example/oop2ipf24/manager.fxml", "Manager Dashboard", event);
             } else if (authenticatedUser instanceof Client) {
-                navigateTo("/com/example/oop2ipf24/client.fxml", "Client Dashboard", event);
+                navigateTo("/com/example/oop2ipf24/client-view.fxml", "Client Dashboard", event);
             }
         } else {
             // Show an error message for invalid credentials
