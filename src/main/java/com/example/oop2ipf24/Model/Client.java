@@ -20,11 +20,7 @@ public class Client implements User {
     }
 
     @Override
-    public String getRole() {
-        return "CLIENT";
-    }
-
-    public void bookTicket() {
-        System.out.println("Client is booking a ticket...");
+    public void performRoleSpecificAction() {
+        // Implement client-specific actions here
     }
 }
