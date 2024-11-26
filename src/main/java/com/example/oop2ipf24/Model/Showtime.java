@@ -1,9 +1,14 @@
 package com.example.oop2ipf24.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Showtime {
 
     private String aTime;
     private String aDate;
+
+    private List<Showtime> showtimes = new ArrayList<>();
 
     public Showtime(String pTime, String pDate) {
         this.aTime = pTime;
