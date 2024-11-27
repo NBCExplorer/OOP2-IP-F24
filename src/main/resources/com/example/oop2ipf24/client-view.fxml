@@ -17,7 +17,7 @@
       </TableView>
 
       <!-- Buttons -->
-      <Button fx:id="backButton" layoutX="272.0" layoutY="244.0" mnemonicParsing="false" style="-fx-background-color: #f0f0f0;" text="Back" />
-      <Button fx:id="buyTicketButton" layoutX="257.0" layoutY="149.0" mnemonicParsing="false" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Buy Ticket" />
+      <Button fx:id="backButton" layoutX="272.0" layoutY="244.0" mnemonicParsing="false" text="Back" onAction="#handleBackButton" />
+      <Button fx:id="buyTicketButton" layoutX="257.0" layoutY="149.0" mnemonicParsing="false" text="Buy Ticket" onAction="#handleBuyTicketButton"/>
    </children>
 </AnchorPane>
