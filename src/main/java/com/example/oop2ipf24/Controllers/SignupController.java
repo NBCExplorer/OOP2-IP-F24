@@ -16,6 +16,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
+/**
+ * Controller class for the signup-view.fxml file.
+ */
 public class SignupController {
 
     // Declare the necessary fields for the input fields
@@ -32,6 +36,10 @@ public class SignupController {
     @FXML
     private Button backButton;
 
+
+    /**
+     * Handles the signup button click event.
+     */
     @FXML
     private void onSignup(ActionEvent event) {
         // Get the input values
@@ -62,7 +70,10 @@ public class SignupController {
         navigateTo("/com/example/oop2ipf24/login-view.fxml", "Login", event);
     }
 
-    // Show error alert
+
+    /**
+     * Handles the error alerts.
+     */
     private void showErrorAlert(String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
@@ -71,7 +82,9 @@ public class SignupController {
         alert.showAndWait();
     }
 
-    // Show info alert
+    /**
+     * Handles the success alerts.
+     */
     private void showInfoAlert(String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Success");
@@ -80,12 +93,17 @@ public class SignupController {
         alert.showAndWait();
     }
 
+    /**
+     * Handles the back button click event.
+     */
     @FXML
     private void onBackToLogin(ActionEvent event) {
         navigateTo("/com/example/oop2ipf24/login-view.fxml", "Login", event);
     }
 
-    // Navigate to another view
+    /**
+     * Navigates to the specified FXML file.
+     */
     private void navigateTo(String fxmlFilePath, String title, ActionEvent event) {
         try {
             // Load the FXML file

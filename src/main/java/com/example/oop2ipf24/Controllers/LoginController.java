@@ -19,9 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * Controller class for the login-view.fxml file.
+ */
 public class LoginController {
-
-
 
     @FXML
     private TextField usernameField;
@@ -32,6 +34,10 @@ public class LoginController {
     // Map to store users by username
     public static Map<String, User> users = new HashMap<>();
 
+
+    /**
+     * Constructor to add sample users.
+     */
     public LoginController() {
         // Adding sample Manager and Client users
         users.put("manager1", new Manager("manager1", "password1"));
@@ -119,7 +125,7 @@ public class LoginController {
     }
 
     /**
-     * Placeholder for the "Sign Up" button functionality.
+     * Handles the sign up button click event.
      */
     @FXML
     private void onSignUp(ActionEvent event) {
@@ -127,6 +133,9 @@ public class LoginController {
     }
 
 
+    /**
+     * Handles the close button click event.
+     */
     @FXML
     private void onClose(ActionEvent event) {
         // Close the current window
