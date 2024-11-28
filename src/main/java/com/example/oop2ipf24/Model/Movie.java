@@ -6,7 +6,6 @@ import java.util.List;
 public class Movie {
 
     private String aName;
-    private List<Movie> movies;
 
     public Movie(String pName) {
         this.aName = pName;

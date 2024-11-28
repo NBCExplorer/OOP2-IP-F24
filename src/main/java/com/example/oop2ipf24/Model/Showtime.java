@@ -12,6 +12,8 @@ public class Showtime {
     private Room aRoom;
 
     private List<Showtime> showtimes;
+    private List<Movie> movies;
+    private List<Room> rooms;
 
     public Showtime(String pTime, String pDate, Movie pMovie, Room pRoom) {
         this.aTime = pTime;
@@ -50,5 +52,29 @@ public class Showtime {
 
     public void setRoom(Room pRoom) {
         this.aRoom = pRoom;
+    }
+
+    public void addShowtime(Showtime pShowtime) {
+        showtimes.add(pShowtime);
+    }
+
+    public List<Showtime> getShowtimes() {
+        return showtimes;
+    }
+
+    public void addMovie(Movie pMovie) {
+        movies.add(pMovie);
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void addRoom(Room pRoom) {
+        rooms.add(pRoom);
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
     }
 }
