@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller class for the confirmation-view.fxml file.
+ */
 public class ConfirmationController {
 
     @FXML
@@ -24,18 +27,27 @@ public class ConfirmationController {
     @FXML
     private Button cancelButton;
 
+    /**
+     * Handles the "Buy Ticket" button click event.
+     */
     @FXML
     private void onConfirm(ActionEvent event) {
         // Handle the "Back" button click - navigate to client-view (or any other view)
         navigateToClientView(event);
     }
 
+    /**
+     * Handles the "Cancel" button click event.
+     */
     @FXML
     private void onCancel(ActionEvent event) {
         // Handle the "Close" button click - close the program
         closeApplication(event);
     }
 
+    /**
+     * Navigates to the client-view.fxml file.
+     */
     private void navigateToClientView(ActionEvent event) {
         try {
             // Load the client-view.fxml and show it
@@ -57,17 +69,28 @@ public class ConfirmationController {
         }
     }
 
+    /**
+     * Closes the current window.
+     */
     private void closeWindow(ActionEvent event) {
         // Get the current stage (confirmation window) and close it
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Closes the entire application.
+     */
     private void closeApplication(ActionEvent event) {
         // Close the entire application
         Platform.exit();
     }
 
+    /**
+     * Displays an error message in an alert dialog.
+     *
+     * @param message the error message to display
+     */
     private void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
