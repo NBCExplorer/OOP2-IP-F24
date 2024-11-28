@@ -3,16 +3,12 @@ package com.example.oop2ipf24.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Movie extends Showtime {
+public class Movie {
 
     private String aName;
-    private String pTime;
-    private String pDate;
+    private List<Movie> movies;
 
-    private List<Movie> movies = new ArrayList<>();
-
-    public Movie(String pName, String pTime, String pDate) {
-        super(pTime, pDate);
+    public Movie(String pName) {
         this.aName = pName;
     }
 

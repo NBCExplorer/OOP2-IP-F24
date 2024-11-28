@@ -3,15 +3,12 @@ package com.example.oop2ipf24.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room extends Showtime {
-private int aRoomNumber;
-    private String aDate;
-    private String aTime;
+public class Room {
 
-    private List<Room> rooms = new ArrayList<>();
+    private int aRoomNumber;
+    private List<Room> rooms;
 
     public Room(int pRoomNumber, String pDate, String pTime) {
-        super(pDate, pTime);
         this.aRoomNumber = pRoomNumber;
     }
 

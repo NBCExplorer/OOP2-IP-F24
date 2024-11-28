@@ -8,11 +8,16 @@ public class Showtime {
     private String aTime;
     private String aDate;
 
-    private List<Showtime> showtimes = new ArrayList<>();
+    private Movie aMovie;
+    private Room aRoom;
 
-    public Showtime(String pTime, String pDate) {
+    private List<Showtime> showtimes;
+
+    public Showtime(String pTime, String pDate, Movie pMovie, Room pRoom) {
         this.aTime = pTime;
         this.aDate = pDate;
+        this.aMovie = pMovie;
+        this.aRoom = pRoom;
     }
 
     public String getTime() {
@@ -29,5 +34,21 @@ public class Showtime {
 
     public void setDate(String pDate) {
         this.aDate = pDate;
+    }
+
+    public Movie getMovie() {
+        return this.aMovie;
+    }
+
+    public void setMovie(Movie pMovie) {
+        this.aMovie = pMovie;
+    }
+
+    public Room getRoom() {
+        return this.aRoom;
+    }
+
+    public void setRoom(Room pRoom) {
+        this.aRoom = pRoom;
     }
 }
