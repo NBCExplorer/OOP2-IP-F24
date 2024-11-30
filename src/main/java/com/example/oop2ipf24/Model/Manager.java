@@ -1,9 +1,12 @@
 package com.example.oop2ipf24.Model;
 
+import java.io.Serializable;
+
 /**
  * Represents a manager user of the system.
  */
-public class Manager implements User {
+public class Manager implements User, Serializable {
+    private static final long serialVersionUID = 1L;
     private String username;
     private String password;
 
@@ -12,33 +15,18 @@ public class Manager implements User {
         this.password = password;
     }
 
-    /**
-     * Get the username of the manager.
-     * @return The username of the manager.
-     */
     @Override
     public String getUsername() {
         return username;
     }
 
-    /**
-     * Get the password of the manager.
-     * @return The password of the manager.
-     */
     @Override
     public String getPassword() {
         return password;
     }
 
-    /**
-     * Perform role-specific actions for the manager.
-     */
     @Override
     public void performRoleSpecificAction() {
         // Implement manager-specific actions here
-    }
-
-    public void manageTheatre() {
-        System.out.println("Manager is managing the theatre...");
     }
 }
