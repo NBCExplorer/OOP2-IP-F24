@@ -1,5 +1,6 @@
 package com.example.oop2ipf24.Controllers;
 
+import com.sun.javafx.menu.MenuItemBase;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,6 +41,9 @@ public class ManagerHomeController {
     @FXML
     private Button removeRoomButton1; // Remove room from the text field
 
+    @FXML
+    private Button editRoomButton1;
+
 
     @FXML
     public void initialize() {
@@ -59,6 +63,9 @@ public class ManagerHomeController {
         addRoomButton1.setOnAction(event -> openAddRoomWindow());
 
         removeRoomButton1.setOnAction(event -> openDeleteConfirmationRoomWindow());
+
+        editRoomButton1.setOnAction(event -> openEditRoomWindow());
+
 
 
     }
@@ -249,6 +256,42 @@ public class ManagerHomeController {
             stage.showAndWait(); // Wait until the Add Room window is closed
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void openEditRoomWindow() {
+        String selectedRoom = roomList.getSelectionModel().getSelectedItem();
+        if (selectedRoom != null) {
+            try {
+                // Load the edit room FXML
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/editroom.fxml"));
+                Parent root = loader.load();
+
+                // Get the edit controller and set the room name
+                editRoomController controller = loader.getController();
+                controller.setRoom(selectedRoom);
+
+                // Define the callback to update the room list
+                controller.setOnSaveCallback(() -> {
+                    String updatedRoom = controller.getUpdatedRoom(); // Get the updated name from the text field
+                    if (updatedRoom != null && !updatedRoom.isEmpty()) {
+                        int selectedIndex = roomList.getSelectionModel().getSelectedIndex();
+                        roomList.getItems().set(selectedIndex, updatedRoom); // Replace the room name in the ListView
+                    }
+                });
+
+                // Show the edit window
+                Stage stage = new Stage();
+                stage.setTitle("Edit Room");
+                stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
+                stage.setScene(new Scene(root));
+                stage.showAndWait(); // Wait until the edit window is closed
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No room selected to edit.");
         }
     }
 }
