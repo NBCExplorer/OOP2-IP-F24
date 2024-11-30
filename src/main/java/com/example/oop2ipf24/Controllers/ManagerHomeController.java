@@ -20,6 +20,9 @@ public class ManagerHomeController {
     private ListView<String> movieList; // List of movies displayed
 
     @FXML
+    private ListView<String> roomList; // List of rooms displayed
+
+    @FXML
     private Button removeMovieButton; // Button to remove movies
 
     @FXML
@@ -30,6 +33,13 @@ public class ManagerHomeController {
 
     @FXML
     private Button showClientList; // Button to show random client list
+
+    @FXML
+    private Button addRoomButton1; // Add room Button for the text field
+
+    @FXML
+    private Button removeRoomButton1; // Remove room from the text field
+
 
     @FXML
     public void initialize() {
@@ -44,6 +54,13 @@ public class ManagerHomeController {
 
         // Set up the button to show the random client list
         showClientList.setOnAction(event -> showClientListInNewWindow());
+
+        // Set up the add room button to open the Add Room
+        addRoomButton1.setOnAction(event -> openAddRoomWindow());
+
+        removeRoomButton1.setOnAction(event -> openDeleteConfirmationRoomWindow());
+
+
     }
 
     /**
@@ -79,6 +96,44 @@ public class ManagerHomeController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Opens the delete confirmation window for a selected item in the provided ListView.
+     */
+    private void openDeleteConfirmationRoomWindow() {
+        // Ensure an item is selected
+        String selectedItem = roomList.getSelectionModel().getSelectedItem();
+        if (selectedItem == null) {
+            return; // Do nothing if no item is selected
+        }
+
+        try {
+            // Load the DeleteVerifController FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/delete-verification.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
+
+            // Set up the controller with actions
+            DeleteVerifController deleteVerifController = loader.getController();
+            deleteVerifController.setOnYes(() -> {
+                // Remove the selected item from the list
+                roomList.getItems().remove(selectedItem);
+                stage.close(); // Close the confirmation window
+            });
+
+            deleteVerifController.setOnNo(stage::close); // Close the confirmation window on "No"
+
+            stage.setTitle("Delete Confirmation");
+            stage.showAndWait(); // Wait until the confirmation window is closed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
     /**
      * Opens the Add Movie window.
@@ -175,5 +230,25 @@ public class ManagerHomeController {
         // Show the new window
         clientListStage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
         clientListStage.showAndWait();
+    }
+
+
+    private void openAddRoomWindow() {
+        try {
+            // Load the AddRoom.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/AddRoom.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
+
+            // Get the AddRoomController and pass the room list reference
+            AddRoomController addRoomController = loader.getController();
+            addRoomController.setRoomList(roomList);
+
+            stage.setTitle("Add Room");
+            stage.showAndWait(); // Wait until the Add Room window is closed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
