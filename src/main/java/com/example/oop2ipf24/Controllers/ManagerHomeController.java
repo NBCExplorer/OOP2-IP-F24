@@ -44,6 +44,18 @@ public class ManagerHomeController {
     @FXML
     private Button editRoomButton1;
 
+    @FXML
+    private Button editShowButton;
+
+    @FXML
+    private Button viewShowsButton;
+
+    @FXML
+    private Button addShowButton;
+
+    @FXML
+    private Button removeShowButton;
+
 
     @FXML
     public void initialize() {
@@ -66,7 +78,13 @@ public class ManagerHomeController {
 
         editRoomButton1.setOnAction(event -> openEditRoomWindow());
 
+        editShowButton.setOnAction(event -> openEditShowWindow());
 
+        addShowButton.setOnAction(event -> openAddShowWindow());
+
+        viewShowsButton.setOnAction(event -> openShowsListWindow());
+
+        removeShowButton.setOnAction(event -> openRemoveShowWindow());
 
     }
 
