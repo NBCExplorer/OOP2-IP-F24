@@ -312,4 +312,24 @@ public class ManagerHomeController {
             System.out.println("No room selected to edit.");
         }
     }
+
+    // Micah
+    private void openEditShowWindow() {
+
+    }
+
+    // Micah
+    private void openAddShowWindow() {
+
+    }
+
+    // Micah
+    private void openRemoveShowWindow() {
+
+    }
+
+    // Micah
+    private void openShowsListWindow() {
+
+    }
 }
