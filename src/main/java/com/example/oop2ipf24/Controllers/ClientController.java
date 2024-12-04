@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller for the Client view.
+ */
 public class ClientController {
 
     @FXML
@@ -34,6 +37,9 @@ public class ClientController {
     @FXML
     private Button buyTicketButton;
 
+    /**
+     * Initializes the Client view.
+     */
     @FXML
     public void initialize() {
         // Initialize data (example data, replace with your own logic)
@@ -56,11 +62,17 @@ public class ClientController {
         showtimeList.setItems(showtimes);
     }
 
+    /**
+     * Handles the back button click event.
+     */
     @FXML
     private void handleBackButton() {
         navigateTo("/com/example/oop2ipf24/login-view.fxml");
     }
 
+    /**
+     * Handles the buy ticket button click event.
+     */
     @FXML
     private void handleBuyTicketButton() {
         User user = LoginController.users.get(LoginController.currentUser); // Use the current logged-in user
@@ -73,6 +85,10 @@ public class ClientController {
         }
     }
 
+    /**
+     * Navigates to the specified FXML view.
+     * @param fxmlFile The FXML file to navigate to.
+     */
     private void navigateTo(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -87,6 +103,10 @@ public class ClientController {
         }
     }
 
+    /**
+     * Navigates to the Confirmation view.
+     * @param email The client's email address.
+     */
     private void navigateToConfirmationView(String email) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/confirmation-view.fxml"));
