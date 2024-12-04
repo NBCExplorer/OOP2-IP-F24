@@ -28,6 +28,6 @@
       <Button fx:id="editShowButton" layoutX="392.0" layoutY="261.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="View &amp; Edit" />
       <Button fx:id="addShowButton" layoutX="392.0" layoutY="294.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="Add" />
       <Button fx:id="removeShowButton" layoutX="392.0" layoutY="327.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="Remove" />
-      <ListView layoutX="392.0" layoutY="51.0" prefHeight="200.0" prefWidth="182.0" />
+      <ListView fx:id="showListView" layoutX="392.0" layoutY="51.0" prefHeight="200.0" prefWidth="182.0" />
    </children>
 </AnchorPane>

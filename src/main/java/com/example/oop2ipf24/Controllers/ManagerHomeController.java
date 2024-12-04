@@ -1,5 +1,6 @@
 package com.example.oop2ipf24.Controllers;
 
+import com.example.oop2ipf24.Model.Showtime;
 import com.sun.javafx.menu.MenuItemBase;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,9 @@ public class ManagerHomeController {
 
     @FXML
     private ListView<String> roomList; // List of rooms displayed
+
+    @FXML
+    private ListView<Showtime> showListView;
 
     @FXML
     private Button removeMovieButton; // Button to remove movies
@@ -310,6 +314,27 @@ public class ManagerHomeController {
     // Micah
     private void openEditShowWindow() {
 
+        try {
+            // Load the edit room FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/showtime-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the edit controller and set the room name
+            showtimeController controller = loader.getController();
+            controller.setManagerHomeController(this);
+            Showtime selectedShow = showListView.getSelectionModel().getSelectedItem();
+            controller.setShow(selectedShow);
+
+            // Show the edit window
+            Stage stage = new Stage();
+            stage.setTitle("Edit Room");
+            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
+            stage.setScene(new Scene(root));
+            stage.showAndWait(); // Wait until the edit window is closed
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Micah
@@ -321,4 +346,9 @@ public class ManagerHomeController {
     private void openRemoveShowWindow() {
 
     }
+
+    public void addShowToListView(Showtime pShowtime) {
+        showListView.getItems().add(pShowtime);
+    }
+
 }
