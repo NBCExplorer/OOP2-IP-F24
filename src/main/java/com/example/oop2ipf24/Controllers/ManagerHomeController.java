@@ -48,9 +48,6 @@ public class ManagerHomeController {
     private Button editShowButton;
 
     @FXML
-    private Button viewShowButton;
-
-    @FXML
     private Button addShowButton;
 
     @FXML
@@ -81,8 +78,6 @@ public class ManagerHomeController {
         editShowButton.setOnAction(event -> openEditShowWindow());
 
         addShowButton.setOnAction(event -> openAddShowWindow());
-
-        viewShowButton.setOnAction(event -> openShowsListWindow());
 
         removeShowButton.setOnAction(event -> openRemoveShowWindow());
     }
@@ -324,11 +319,6 @@ public class ManagerHomeController {
 
     // Micah
     private void openRemoveShowWindow() {
-
-    }
-
-    // Micah
-    private void openShowsListWindow() {
 
     }
 }
