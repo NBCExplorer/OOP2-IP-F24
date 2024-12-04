@@ -36,19 +36,19 @@ public class ManagerHomeController {
     private Button showClientList; // Button to show random client list
 
     @FXML
-    private Button addRoomButton1; // Add room Button for the text field
+    private Button addRoomButton; // Add room Button for the text field
 
     @FXML
-    private Button removeRoomButton1; // Remove room from the text field
+    private Button removeRoomButton; // Remove room from the text field
 
     @FXML
-    private Button editRoomButton1;
+    private Button editRoomButton;
 
     @FXML
     private Button editShowButton;
 
     @FXML
-    private Button viewShowsButton;
+    private Button viewShowButton;
 
     @FXML
     private Button addShowButton;
@@ -72,20 +72,19 @@ public class ManagerHomeController {
         showClientList.setOnAction(event -> showClientListInNewWindow());
 
         // Set up the add room button to open the Add Room
-        addRoomButton1.setOnAction(event -> openAddRoomWindow());
+        addRoomButton.setOnAction(event -> openAddRoomWindow());
 
-        removeRoomButton1.setOnAction(event -> openDeleteConfirmationRoomWindow());
+        removeRoomButton.setOnAction(event -> openDeleteConfirmationRoomWindow());
 
-        editRoomButton1.setOnAction(event -> openEditRoomWindow());
+        editRoomButton.setOnAction(event -> openEditRoomWindow());
 
         editShowButton.setOnAction(event -> openEditShowWindow());
 
         addShowButton.setOnAction(event -> openAddShowWindow());
 
-        viewShowsButton.setOnAction(event -> openShowsListWindow());
+        viewShowButton.setOnAction(event -> openShowsListWindow());
 
         removeShowButton.setOnAction(event -> openRemoveShowWindow());
-
     }
 
     /**
