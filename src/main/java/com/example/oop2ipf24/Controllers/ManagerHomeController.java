@@ -1,13 +1,20 @@
 package com.example.oop2ipf24.Controllers;
 
+import com.example.oop2ipf24.Model.Movie;
+import com.example.oop2ipf24.Model.Room;
 import com.example.oop2ipf24.Model.Showtime;
+import com.example.oop2ipf24.MovieApplication;
 import com.sun.javafx.menu.MenuItemBase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,7 +32,11 @@ public class ManagerHomeController {
     private ListView<String> roomList; // List of rooms displayed
 
     @FXML
-    private ListView<Showtime> showListView;
+    private ListView<String> showListView;
+
+    private final ObservableList<Showtime> showObservableList = FXCollections.observableArrayList();
+    private final ObservableList<Movie> movieObservableList = FXCollections.observableArrayList();
+    private final ObservableList<Room> roomObservableList = FXCollections.observableArrayList();
 
     @FXML
     private Button removeMovieButton; // Button to remove movies
@@ -313,42 +324,62 @@ public class ManagerHomeController {
 
     // Micah
     private void openEditShowWindow() {
+        int selectedIndex = showListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex != -1) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/showtime-view.fxml"));
+                Parent root = fxmlLoader.load();
 
-        try {
-            // Load the edit room FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/showtime-view.fxml"));
-            Parent root = loader.load();
+                showtimeController controller = fxmlLoader.getController();
+                Showtime selectedShow = showObservableList.get(selectedIndex);
+                controller.setShow(selectedShow);
 
-            // Get the edit controller and set the room name
-            showtimeController controller = loader.getController();
-            controller.setManagerHomeController(this);
-            Showtime selectedShow = showListView.getSelectionModel().getSelectedItem();
-            controller.setShow(selectedShow);
+                Scene scene = new Scene(root, 320, 240);
+                Stage stage = new Stage();
+                stage.setTitle("View & Edit Showtime");
+                stage.setScene(scene);
+                stage.showAndWait();
 
-            // Show the edit window
-            Stage stage = new Stage();
-            stage.setTitle("Edit Room");
-            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
-            stage.setScene(new Scene(root));
-            stage.showAndWait(); // Wait until the edit window is closed
-
-        } catch (IOException e) {
-            e.printStackTrace();
+                showListView.getItems().set(selectedIndex, selectedShow.getDate());
+            } catch (IOException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Showtime edit error: " + e.getMessage());
+                alert.show();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No showtime selected to view or edit.");
+            alert.show();
         }
     }
 
     // Micah
     private void openAddShowWindow() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/showtime-view.fxml"));
+            Parent root = fxmlLoader.load();
 
+            showtimeController controller = fxmlLoader.getController();
+            Showtime newShow = new Showtime();
+            controller.setShow(newShow);
+
+            Scene scene = new Scene(root, 320, 240);
+            Stage stage = new Stage();
+            stage.setTitle("Add Showtime");
+            stage.setScene(scene);
+            stage.showAndWait();
+
+            if (newShow.getDate() != null && !newShow.getDate().isEmpty()) {
+                showObservableList.add(newShow);
+                showListView.getItems().add(newShow.getDate());
+            }
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Showtime addition error: " + e.getMessage());
+            alert.show();
+        }
     }
 
     // Micah
     private void openRemoveShowWindow() {
 
-    }
-
-    public void addShowToListView(Showtime pShowtime) {
-        showListView.getItems().add(pShowtime);
     }
 
 }

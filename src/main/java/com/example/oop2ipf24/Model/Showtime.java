@@ -13,6 +13,9 @@ public class Showtime {
 
     private static List<Showtime> showtimes;
 
+    public Showtime() {
+    }
+
     public Showtime(String pTime, String pDate, Movie pMovie, Room pRoom) {
         this.aTime = pTime;
         this.aDate = pDate;

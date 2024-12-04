@@ -14,8 +14,8 @@ import java.io.IOException;
 public class MovieApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("login-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("manager.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800, 450);
         stage.setTitle("Movie Theatre System");
         stage.setScene(scene);
         stage.show();

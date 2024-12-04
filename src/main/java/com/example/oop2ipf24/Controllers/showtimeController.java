@@ -4,8 +4,10 @@ import com.example.oop2ipf24.Model.Movie;
 import com.example.oop2ipf24.Model.Showtime;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 import org.w3c.dom.Text;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 import java.awt.*;
 
@@ -34,10 +36,10 @@ public class showtimeController {
 
     public void setShow(Showtime pShowtime) {
         showToDisplay = pShowtime;
-        PopulateFields();
+        PopulateTextFields();
     }
 
-    private void PopulateFields() {
+    private void PopulateTextFields() {
         if (showToDisplay != null) {
             showDateTextField.setText(showToDisplay.getDate());
             showTimeTextField.setText(showToDisplay.getTime());
@@ -56,21 +58,16 @@ public class showtimeController {
 
     public void saveShowtime() {
         try {
-            String showDate = showDateTextField.getText();
-            String showTime = showTimeTextField.getText();
+            showToDisplay.setDate(showDateTextField.getText());
+            showToDisplay.setTime(showTimeTextField.getText());
+            showToDisplay.setMovie(null);
+            showToDisplay.setRoom(null);
 
-            // If editing, update the showtime, otherwise add a new one
-            if (showToDisplay != null) {
-                showToDisplay.setDate(showDate);
-                showToDisplay.setTime(showTime);
-            } else {
-                Showtime newShowtime = new Showtime(showDate, showTime, null, null);
-                Showtime.addShowtime(newShowtime); // Add new showtime to the static list
-                aManagerHomeController.addShowToListView(newShowtime); // Add to ListView
-            }
-        } catch (Exception e) {
-            // Handle invalid date/time input
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid date/time format. Please check your input.");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Changes saved successfully.");
+            alert.show();
+        }
+        catch (IllegalArgumentException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Showtime edit error: " + e.getMessage());
             alert.show();
         }
     }
@@ -80,7 +77,8 @@ public class showtimeController {
     }
 
     public void closeWindow() {
-
+        Stage stage = (Stage) saveButton.getScene().getWindow();
+        stage.close();
     }
 
 }
