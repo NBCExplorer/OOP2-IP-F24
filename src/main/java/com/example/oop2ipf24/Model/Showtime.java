@@ -11,7 +11,10 @@ public class Showtime {
     private Movie aMovie;
     private Room aRoom;
 
-    private List<Showtime> showtimes;
+    private static List<Showtime> showtimes;
+
+    public Showtime() {
+    }
 
     public Showtime(String pTime, String pDate, Movie pMovie, Room pRoom) {
         this.aTime = pTime;
@@ -52,11 +55,15 @@ public class Showtime {
         this.aRoom = pRoom;
     }
 
-    public void addShowtime(Showtime pShowtime) {
+    public static void addShowtime(Showtime pShowtime) {
         showtimes.add(pShowtime);
     }
 
     public List<Showtime> getShowtimes() {
         return showtimes;
+    }
+
+    public Showtime getShowtimesListItem(int pIndex) {
+        return showtimes.get(pIndex);
     }
 }

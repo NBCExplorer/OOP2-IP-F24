@@ -9,6 +9,9 @@ public class Movie {
 
     private List<Movie> movies;
 
+    public Movie(){
+    }
+
     public Movie(String pName) {
         this.aName = pName;
     }
