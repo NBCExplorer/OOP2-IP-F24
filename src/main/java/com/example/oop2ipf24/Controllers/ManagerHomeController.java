@@ -172,56 +172,54 @@ public class ManagerHomeController {
      */
     private void openAddMovieWindow() {
         try {
-            // Load the AddController FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/add-function.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/movie-view.fxml"));
+            Parent root = fxmlLoader.load();
+
+            MovieController controller = fxmlLoader.getController();
+            Movie newMovie = new Movie();
+            controller.setMovie(newMovie);
+
+            Scene scene = new Scene(root, 320, 240);
             Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
+            stage.setTitle("Add Showtime");
+            stage.setScene(scene);
+            stage.showAndWait();
 
-            // Pass the current movie list to the AddController
-            AddController addController = loader.getController();
-            addController.setMovieList(movieList);
-
-            stage.setTitle("Add Movie");
-            stage.showAndWait(); // Wait until the Add window is closed
+            if (newMovie.getName() != null && !newMovie.getName().isEmpty()) {
+                movieObservableList.add(newMovie);
+                movieList.getItems().add(newMovie.getName());
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Movie addition error: " + e.getMessage());
+            alert.show();
         }
     }
 
     private void openEditMovieWindow() {
-        String selectedMovie = movieList.getSelectionModel().getSelectedItem();
-        if (selectedMovie != null) {
+        int selectedMovieIndex = movieList.getSelectionModel().getSelectedIndex();
+        if (selectedMovieIndex != -1) {
             try {
-                // Load the edit movie FXML
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/edit-function.fxml"));
-                Parent root = loader.load();
+                FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/movie-view.fxml"));
+                Parent root = fxmlLoader.load();
 
-                // Get the edit controller and set the movie title
-                editController controller = loader.getController();
+                MovieController controller = fxmlLoader.getController();
+                Movie selectedMovie = movieObservableList.get(selectedMovieIndex);
                 controller.setMovie(selectedMovie);
 
-                // Define the callback to update the movie list
-                controller.setOnSaveCallback(() -> {
-                    String updatedMovie = controller.getUpdatedMovie(); // Get the updated title from the text field
-                    if (updatedMovie != null && !updatedMovie.isEmpty()) {
-                        int selectedIndex = movieList.getSelectionModel().getSelectedIndex();
-                        movieList.getItems().set(selectedIndex, updatedMovie); // Replace the movie title in the ListView
-                    }
-                });
-
-                // Show the edit window
+                Scene scene = new Scene(root, 320, 240);
                 Stage stage = new Stage();
-                stage.setTitle("Edit Movie");
-                stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
-                stage.setScene(new Scene(root));
-                stage.showAndWait(); // Wait until the edit window is closed
+                stage.setTitle("View & Edit Room");
+                stage.setScene(scene);
+                stage.showAndWait();
 
+                movieList.getItems().set(selectedMovieIndex, selectedMovie.getName());
             } catch (IOException e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Movie edit error: " + e.getMessage());
+                alert.show();
             }
         } else {
-            System.out.println("No movie selected to edit.");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No movie selected to view or edit.");
+            alert.show();
         }
     }
 
