@@ -47,7 +47,7 @@ public class SignupController {
             return;
         }
 
-        LoginController.users.put(username, new Client(username, password));
+        LoginController.users.put(username, new Client(username, password, email));
         LoginController.saveUsers();
 
         showInfoAlert("Sign up successful!");
