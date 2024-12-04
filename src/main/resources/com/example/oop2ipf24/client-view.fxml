@@ -3,21 +3,31 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop2ipf24.Controllers.ClientController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop2ipf24.Controllers.ClientController">
    <children>
       <!-- Title Label -->
-      <Label layoutX="125.0" layoutY="20.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Showtimes" />
+      <Label layoutX="250.0" layoutY="20.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Client View" />
 
-      <!-- Table for Showtimes -->
-      <TableView fx:id="showtimeTable">
-         <columns>
-            <TableColumn fx:id="timeColumn" text="Time" />
-            <TableColumn fx:id="dateColumn" text="Date" />
-         </columns>
-      </TableView>
+      <!-- VBox for Movies -->
+      <VBox layoutX="14.0" layoutY="51.0" prefHeight="300.0" prefWidth="182.0">
+         <Label text="Movies" />
+         <ListView fx:id="movieList" />
+      </VBox>
+
+      <!-- VBox for Rooms -->
+      <VBox layoutX="202.0" layoutY="51.0" prefHeight="300.0" prefWidth="182.0">
+         <Label text="Rooms" />
+         <ListView fx:id="roomList" />
+      </VBox>
+
+      <!-- VBox for Showtimes -->
+      <VBox layoutX="392.0" layoutY="51.0" prefHeight="300.0" prefWidth="182.0">
+         <Label text="Showtimes" />
+         <ListView fx:id="showtimeList" />
+      </VBox>
 
       <!-- Buttons -->
-      <Button fx:id="backButton" layoutX="272.0" layoutY="244.0" mnemonicParsing="false" text="Back" onAction="#handleBackButton" />
-      <Button fx:id="buyTicketButton" layoutX="257.0" layoutY="149.0" mnemonicParsing="false" text="Buy Ticket" onAction="#handleBuyTicketButton"/>
+      <Button fx:id="backButton" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" text="Back" onAction="#handleBackButton" />
+      <Button fx:id="buyTicketButton" layoutX="500.0" layoutY="361.0" mnemonicParsing="false" text="Buy Ticket" onAction="#handleBuyTicketButton"/>
    </children>
 </AnchorPane>

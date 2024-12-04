@@ -26,6 +26,7 @@ public class LoginController {
     private PasswordField passwordField;
 
     public static Map<String, User> users = new HashMap<>();
+    public static String currentUser; // Add this field to track the current user
 
     static {
         loadUsers();
@@ -49,8 +50,8 @@ public class LoginController {
 
     public LoginController() {
         if (users.isEmpty()) {
-            users.put("manager1", new Manager("manager1", "password1"));
-            users.put("client1", new Client("client1", "password2"));
+            users.put("manager1", new Manager("manager1", "password1", "manager1@example.com"));
+            users.put("client1", new Client("client1", "password2", "client1@example.com"));
         }
     }
 
@@ -62,6 +63,7 @@ public class LoginController {
         User authenticatedUser = authenticateUser(username, password);
 
         if (authenticatedUser != null) {
+            currentUser = username; // Set the current user
             if (authenticatedUser instanceof Manager) {
                 navigateTo("/com/example/oop2ipf24/manager.fxml", "Manager Dashboard", event);
             } else if (authenticatedUser instanceof Client) {
@@ -114,5 +116,4 @@ public class LoginController {
         stage.close();
     }
 }
-
 

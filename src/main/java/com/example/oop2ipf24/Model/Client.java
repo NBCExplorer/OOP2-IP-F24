@@ -9,10 +9,12 @@ public class Client implements User, Serializable {
     private static final long serialVersionUID = 1L;
     private String username;
     private String password;
+    private String email;
 
-    public Client(String username, String password) {
+    public Client(String username, String password, String email) {
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     @Override
@@ -23,6 +25,11 @@ public class Client implements User, Serializable {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
     }
 
     @Override

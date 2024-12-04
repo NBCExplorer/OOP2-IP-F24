@@ -4,8 +4,9 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" prefHeight="243.0" prefWidth="226.0" spacing="20" style="-fx-background-color: white; -fx-padding: 20;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.oop2ipf24.Controllers.ConfirmationController">
-    <Label fx:id="confirmationMessage" prefHeight="71.0" prefWidth="186.0" text="Your e-ticket has been sent to your email! " textAlignment="CENTER" wrapText="true" />
-    <HBox alignment="CENTER" spacing="10" />
-     <Button fx:id="confirmButton" onAction="#onConfirm" text="Back" />
-     <Button fx:id="cancelButton" onAction="#onCancel" text="Close" />
+    <Label fx:id="confirmationMessage" prefHeight="71.0" prefWidth="186.0" text="Your e-ticket has been sent to your email!" textAlignment="CENTER" wrapText="true" />
+    <HBox alignment="CENTER" spacing="10">
+        <Button fx:id="confirmButton" onAction="#onConfirm" text="Back" />
+        <Button fx:id="cancelButton" onAction="#onCancel" text="Close" />
+    </HBox>
 </VBox>
