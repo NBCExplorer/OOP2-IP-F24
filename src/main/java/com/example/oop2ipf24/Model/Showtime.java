@@ -59,4 +59,8 @@ public class Showtime {
     public List<Showtime> getShowtimes() {
         return showtimes;
     }
+
+    public Showtime getShowtimesListItem(int pIndex) {
+        return showtimes.get(pIndex);
+    }
 }
