@@ -4,7 +4,6 @@ import com.example.oop2ipf24.Model.Movie;
 import com.example.oop2ipf24.Model.Room;
 import com.example.oop2ipf24.Model.Showtime;
 import com.example.oop2ipf24.MovieApplication;
-import com.sun.javafx.menu.MenuItemBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -94,7 +92,7 @@ public class ManagerHomeController {
 
         addShowButton.setOnAction(event -> openAddShowWindow());
 
-        removeShowButton.setOnAction(event -> openRemoveShowWindow());
+        removeShowButton.setOnAction(event -> removeShow());
     }
 
     /**
@@ -269,69 +267,67 @@ public class ManagerHomeController {
 
     private void openAddRoomWindow() {
         try {
-            // Load the AddRoom.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/AddRoom.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/room-view.fxml"));
+            Parent root = fxmlLoader.load();
+
+            RoomController controller = fxmlLoader.getController();
+            Room newRoom = new Room();
+            controller.setRoom(newRoom);
+
+            Scene scene = new Scene(root, 320, 240);
             Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
-
-            // Get the AddRoomController and pass the room list reference
-            AddRoomController addRoomController = loader.getController();
-            addRoomController.setRoomList(roomList);
-
             stage.setTitle("Add Room");
-            stage.showAndWait(); // Wait until the Add Room window is closed
+            stage.setScene(scene);
+            stage.showAndWait();
+
+            if (newRoom.getRoomNumber() != null && !newRoom.getRoomNumber().isEmpty()) {
+                roomObservableList.add(newRoom);
+                roomList.getItems().add(newRoom.getRoomNumber());
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Room addition error: " + e.getMessage());
+            alert.show();
         }
     }
 
     private void openEditRoomWindow() {
-        String selectedRoom = roomList.getSelectionModel().getSelectedItem();
-        if (selectedRoom != null) {
+        int selectedRoomIndex = roomList.getSelectionModel().getSelectedIndex();
+        if (selectedRoomIndex != -1) {
             try {
-                // Load the edit room FXML
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/editroom.fxml"));
-                Parent root = loader.load();
+                FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/room-view.fxml"));
+                Parent root = fxmlLoader.load();
 
-                // Get the edit controller and set the room name
-                editRoomController controller = loader.getController();
+                RoomController controller = fxmlLoader.getController();
+                Room selectedRoom = roomObservableList.get(selectedRoomIndex);
                 controller.setRoom(selectedRoom);
 
-                // Define the callback to update the room list
-                controller.setOnSaveCallback(() -> {
-                    String updatedRoom = controller.getUpdatedRoom(); // Get the updated name from the text field
-                    if (updatedRoom != null && !updatedRoom.isEmpty()) {
-                        int selectedIndex = roomList.getSelectionModel().getSelectedIndex();
-                        roomList.getItems().set(selectedIndex, updatedRoom); // Replace the room name in the ListView
-                    }
-                });
-
-                // Show the edit window
+                Scene scene = new Scene(root, 320, 240);
                 Stage stage = new Stage();
-                stage.setTitle("Edit Room");
-                stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
-                stage.setScene(new Scene(root));
-                stage.showAndWait(); // Wait until the edit window is closed
+                stage.setTitle("View & Edit Room");
+                stage.setScene(scene);
+                stage.showAndWait();
 
+                roomList.getItems().set(selectedRoomIndex, selectedRoom.getRoomNumber());
             } catch (IOException e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Room edit error: " + e.getMessage());
+                alert.show();
             }
         } else {
-            System.out.println("No room selected to edit.");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No room selected to view or edit.");
+            alert.show();
         }
     }
 
     // Micah
     private void openEditShowWindow() {
-        int selectedIndex = showListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex != -1) {
+        int selectedShowIndex = showListView.getSelectionModel().getSelectedIndex();
+        if (selectedShowIndex != -1) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/showtime-view.fxml"));
                 Parent root = fxmlLoader.load();
 
                 showtimeController controller = fxmlLoader.getController();
-                Showtime selectedShow = showObservableList.get(selectedIndex);
+                Showtime selectedShow = showObservableList.get(selectedShowIndex);
                 controller.setShow(selectedShow);
 
                 Scene scene = new Scene(root, 320, 240);
@@ -340,7 +336,7 @@ public class ManagerHomeController {
                 stage.setScene(scene);
                 stage.showAndWait();
 
-                showListView.getItems().set(selectedIndex, selectedShow.getDate());
+                showListView.getItems().set(selectedShowIndex, selectedShow.getDate());
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Showtime edit error: " + e.getMessage());
                 alert.show();
@@ -378,8 +374,18 @@ public class ManagerHomeController {
     }
 
     // Micah
-    private void openRemoveShowWindow() {
+    private void removeShow() {
+        int selectedIndex = showListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex != -1) {
+            Showtime removedShow = showObservableList.get(selectedIndex);
+            showObservableList.remove(removedShow);
+            showListView.getItems().remove(selectedIndex);
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Showtime removed successfully.");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No showtime selected to remove.");
+            alert.show();
+        }
     }
-
 }
