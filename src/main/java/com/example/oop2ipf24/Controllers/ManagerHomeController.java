@@ -88,7 +88,7 @@ public class ManagerHomeController {
         // Set up the add room button to open the Add Room
         addRoomButton.setOnAction(event -> openAddRoomWindow());
 
-        removeRoomButton.setOnAction(event -> openDeleteConfirmationRoomWindow());
+        removeRoomButton.setOnAction(event -> removeRoom());
 
         editRoomButton.setOnAction(event -> openEditRoomWindow());
 
@@ -379,6 +379,18 @@ public class ManagerHomeController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Showtime addition error: " + e.getMessage());
             alert.show();
         }
+    }
+
+    public void removeMovie() {
+
+    }
+
+    public void removeRoom() {
+
+    }
+
+    public void removeShow() {
+
     }
 
     /**
