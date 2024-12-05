@@ -73,6 +73,9 @@ public class ManagerHomeController {
     private ObservableList<String> clientObservableList = FXCollections.observableArrayList();
 
 
+    /**
+     * Initializes window by assigning actions to their respective buttons.
+     */
     @FXML
     public void initialize() {
 
@@ -103,79 +106,8 @@ public class ManagerHomeController {
     }
 
     /**
-     * Opens the delete confirmation window.
-     */
-    private void openDeleteConfirmationWindow() {
-        // Ensure a movie is selected
-        String selectedMovie = movieList.getSelectionModel().getSelectedItem();
-        if (selectedMovie == null) {
-            return; // Do nothing if no movie is selected
-        }
-
-        try {
-            // Load the DeleteVerifController FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/delete-verification.fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
-
-            // Set up the controller with actions
-            DeleteVerifController deleteVerifController = loader.getController();
-            deleteVerifController.setOnYes(() -> {
-                // Remove the selected movie from the list
-                movieList.getItems().remove(selectedMovie);
-                stage.close(); // Close the confirmation window
-            });
-
-            deleteVerifController.setOnNo(stage::close); // Close the confirmation window on "No"
-
-            stage.setTitle("Delete Confirmation");
-            stage.showAndWait(); // Wait until the confirmation window is closed
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Opens the delete confirmation window for a selected item in the provided ListView.
-     */
-    private void openDeleteConfirmationRoomWindow() {
-        // Ensure an item is selected
-        String selectedItem = roomList.getSelectionModel().getSelectedItem();
-        if (selectedItem == null) {
-            return; // Do nothing if no item is selected
-        }
-
-        try {
-            // Load the DeleteVerifController FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/delete-verification.fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
-
-            // Set up the controller with actions
-            DeleteVerifController deleteVerifController = loader.getController();
-            deleteVerifController.setOnYes(() -> {
-                // Remove the selected item from the list
-                roomList.getItems().remove(selectedItem);
-                stage.close(); // Close the confirmation window
-            });
-
-            deleteVerifController.setOnNo(stage::close); // Close the confirmation window on "No"
-
-            stage.setTitle("Delete Confirmation");
-            stage.showAndWait(); // Wait until the confirmation window is closed
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-    /**
-     * Opens the Add Movie window.
+     * Opens the Movie window, creates an instance of the movie object
+     * and adds it to both the movie observable list, and the ListView, after the Movie window closes.
      */
     private void openAddMovieWindow() {
         try {
@@ -202,6 +134,10 @@ public class ManagerHomeController {
         }
     }
 
+    /**
+     * Opens the Movie window, sends the data of a selected movie to the Movie stage, and updates said
+     * data after the Movie window closes.
+     */
     private void openEditMovieWindow() {
         int selectedMovieIndex = movieList.getSelectionModel().getSelectedIndex();
         if (selectedMovieIndex != -1) {
@@ -262,7 +198,10 @@ public class ManagerHomeController {
         clientListStage.showAndWait();
     }
 
-
+    /**
+     * Opens the Room window, creates an instance of the room object
+     * and adds it to both the room observable list, and the ListView, after the Room window closes.
+     */
     private void openAddRoomWindow() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/room-view.fxml"));
@@ -288,6 +227,10 @@ public class ManagerHomeController {
         }
     }
 
+    /**
+     * Opens the Room window, sends the data of a selected room to the Room stage, and updates said
+     * data after the room window closes.
+     */
     private void openEditRoomWindow() {
         int selectedRoomIndex = roomList.getSelectionModel().getSelectedIndex();
         if (selectedRoomIndex != -1) {
@@ -318,7 +261,10 @@ public class ManagerHomeController {
         }
     }
 
-    // Micah
+    /**
+     * Opens the Showtime window, sends the data of a selected showtime to the Showtime stage,
+     * and updates said data after the showtime window closes.
+     */
     private void openEditShowWindow() {
         int selectedShowIndex = showListView.getSelectionModel().getSelectedIndex();
         if (selectedShowIndex != -1) {
@@ -349,7 +295,11 @@ public class ManagerHomeController {
         }
     }
 
-    // Micah
+    /**
+     * Opens the Showtime window, creates an instance of the showtime object
+     * and adds it to both the showtime observable list, and the ListView,
+     * after the Showtime window closes.
+     */
     private void openAddShowWindow() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/showtime-view.fxml"));
@@ -375,16 +325,55 @@ public class ManagerHomeController {
         }
     }
 
+    /**
+     * Removes the selected movie from the lists.
+     */
     public void removeMovie() {
+        int selectedIndex = movieList.getSelectionModel().getSelectedIndex();
+        if (selectedIndex != -1) {
+            movieObservableList.remove(selectedIndex);
+            movieList.getItems().remove(selectedIndex);
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Movie removed successfully.");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No movie selected to remove.");
+            alert.show();
+        }
     }
 
+    /**
+     * Removes the selected room from the lists.
+     */
     public void removeRoom() {
+        int selectedIndex = roomList.getSelectionModel().getSelectedIndex();
+        if (selectedIndex != -1) {
+            roomObservableList.remove(selectedIndex);
+            roomList.getItems().remove(selectedIndex);
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Room removed successfully.");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No room selected to remove.");
+            alert.show();
+        }
     }
 
+    /**
+     * Removes the selected showtime from the lists.
+     */
     public void removeShow() {
+        int selectedIndex = showListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex != -1) {
+            showObservableList.remove(selectedIndex);
+            showListView.getItems().remove(selectedIndex);
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Showtime removed successfully.");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No showtime selected to remove.");
+            alert.show();
+        }
     }
 
     /**
