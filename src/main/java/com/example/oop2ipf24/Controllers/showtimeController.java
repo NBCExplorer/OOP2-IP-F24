@@ -1,6 +1,7 @@
 package com.example.oop2ipf24.Controllers;
 
 import com.example.oop2ipf24.Model.Movie;
+import com.example.oop2ipf24.Model.Room;
 import com.example.oop2ipf24.Model.Showtime;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -20,22 +21,22 @@ public class showtimeController {
     private TextField showMovieTextField, showRoomTextField;
 
     @FXML
-    private Button changeMovieButton, changeRoomButton, saveButton, exitButton;
+    private Button saveButton, exitButton;
 
     private Showtime showToDisplay;
-
-    private ManagerHomeController aManagerHomeController;
+    private Movie showMovie;
+    private Room showRoom;
 
     @FXML
     public void initialize() {
-        changeMovieButton.setOnAction(event -> openMovieList());
-        changeRoomButton.setOnAction(event -> openRoomList());
         saveButton.setOnAction(event -> saveShowtime());
         exitButton.setOnAction(event -> closeWindow());
     }
 
-    public void setShow(Showtime pShowtime) {
+    public void setShow(Showtime pShowtime, Movie pMovie, Room pRoom) {
         showToDisplay = pShowtime;
+        showMovie = pMovie;
+        showRoom = pRoom;
         PopulateTextFields();
     }
 
@@ -43,8 +44,8 @@ public class showtimeController {
         if (showToDisplay != null) {
             showDateTextField.setText(showToDisplay.getDate());
             showTimeTextField.setText(showToDisplay.getTime());
-            showMovieTextField.setText(String.valueOf(showToDisplay.getMovie()));
-            showRoomTextField.setText(String.valueOf(showToDisplay.getRoom()));
+            showMovieTextField.setText(showMovie.getName());
+            showRoomTextField.setText(showRoom.getRoomNumber());
         }
     }
 
@@ -60,8 +61,8 @@ public class showtimeController {
         try {
             showToDisplay.setDate(showDateTextField.getText());
             showToDisplay.setTime(showTimeTextField.getText());
-            showToDisplay.setMovie(null);
-            showToDisplay.setRoom(null);
+            showToDisplay.setMovie(showMovie);
+            showToDisplay.setRoom(showRoom);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Changes saved successfully.");
             alert.show();
@@ -70,10 +71,6 @@ public class showtimeController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Showtime edit error: " + e.getMessage());
             alert.show();
         }
-    }
-
-    public void setManagerHomeController(ManagerHomeController pManagerHomeController) {
-        this.aManagerHomeController = pManagerHomeController;
     }
 
     public void closeWindow() {

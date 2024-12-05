@@ -274,7 +274,7 @@ public class ManagerHomeController {
 
                 showtimeController controller = fxmlLoader.getController();
                 Showtime selectedShow = showObservableList.get(selectedShowIndex);
-                controller.setShow(selectedShow);
+                controller.setShow(selectedShow, selectedShow.getMovie(), selectedShow.getRoom());
 
                 Scene scene = new Scene(root, 320, 240);
                 Stage stage = new Stage();
@@ -305,9 +305,16 @@ public class ManagerHomeController {
             FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/showtime-view.fxml"));
             Parent root = fxmlLoader.load();
 
+            int selectedShowMovieIndex = movieList.getSelectionModel().getSelectedIndex();
+            Movie selectedShowMovie = movieObservableList.get(selectedShowMovieIndex);
+
+            int selectedShowRoomIndex = roomList.getSelectionModel().getSelectedIndex();
+            Room selectedShowRoom = roomObservableList.get(selectedShowRoomIndex);
+
+
             showtimeController controller = fxmlLoader.getController();
             Showtime newShow = new Showtime();
-            controller.setShow(newShow);
+            controller.setShow(newShow, selectedShowMovie, selectedShowRoom);
 
             Scene scene = new Scene(root, 320, 240);
             Stage stage = new Stage();
