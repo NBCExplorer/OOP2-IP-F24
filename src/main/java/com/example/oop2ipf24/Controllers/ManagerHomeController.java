@@ -1,9 +1,6 @@
 package com.example.oop2ipf24.Controllers;
 
-import com.example.oop2ipf24.Model.Movie;
-import com.example.oop2ipf24.Model.Room;
-import com.example.oop2ipf24.Model.Showtime;
-import com.example.oop2ipf24.Model.User;
+import com.example.oop2ipf24.Model.*;
 import com.example.oop2ipf24.MovieApplication;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ManagerHomeController {
 
@@ -68,6 +66,11 @@ public class ManagerHomeController {
 
     @FXML
     private Button removeShowButton;
+
+    @FXML
+    private ListView<String> clientListView;
+
+    private ObservableList<String> clientObservableList = FXCollections.observableArrayList();
 
 
     @FXML
@@ -230,41 +233,32 @@ public class ManagerHomeController {
     }
 
     /**
-     * Shows the random list of client names in a new window.
+     * Loads the list of clients into the client list view.
      */
+    private void loadClients() {
+        List<String> clients = LoginController.users.values().stream()
+                .filter(user -> user instanceof Client)
+                .map(User::getUsername)
+                .collect(Collectors.toList());
+        clientObservableList.setAll(clients);
+    }
+
+    /**
+     * Shows the client list in a new window.
+     */
+    @FXML
     private void showClientListInNewWindow() {
+        loadClients();
 
-        String[] clientNames = {
-                "Alice Johnson",
-                "Michael Brown",
-                "Emily Davis",
-                "David Wilson",
-                "Sophia Miller",
-                "Daniel Martinez",
-                "Charlotte Anderson",
-                "Matthew Thompson",
-                "Ava Rodriguez",
-                "James White"
-        };
+        clientListView = new ListView<>(clientObservableList);
 
-        // Shuffle the client names array to create a random order
-        List<String> randomClientList = Arrays.asList(clientNames);
-        Collections.shuffle(randomClientList);
-
-        // Create a new ListView to show the random list
-        ListView<String> clientListView = new ListView<>();
-        clientListView.getItems().setAll(randomClientList);
-
-        // Create a new Stage (window)
         Stage clientListStage = new Stage();
-        clientListStage.setTitle("Very real client list, 100% real people, not chatGPT generated list, Completly real");
+        clientListStage.setTitle("Client List");
 
-        // Create a new Scene and add the ListView to it
         Scene clientListScene = new Scene(clientListView, 300, 400);
         clientListStage.setScene(clientListScene);
 
-        // Show the new window
-        clientListStage.initModality(Modality.APPLICATION_MODAL); // Block interaction with other windows
+        clientListStage.initModality(Modality.APPLICATION_MODAL);
         clientListStage.showAndWait();
     }
 
