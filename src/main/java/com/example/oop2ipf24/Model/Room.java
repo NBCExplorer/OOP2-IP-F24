@@ -1,5 +1,7 @@
 package com.example.oop2ipf24.Model;
 
+import javafx.scene.control.Alert;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +23,11 @@ public class Room {
     }
 
     public void setRoomNumber(String pRoomNumber) {
-        this.aRoomNumber = pRoomNumber;
-    }
-
-    public void addRoom(Room pRoom) {
-        rooms.add(pRoom);
-    }
-
-    public List<Room> getRooms() {
-        return rooms;
+        if (pRoomNumber.trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Room number cannot be empty or only whitespace.");
+            alert.show();
+        } else {
+            this.aRoomNumber = pRoomNumber;
+        }
     }
 }

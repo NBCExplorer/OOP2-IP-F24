@@ -1,5 +1,7 @@
 package com.example.oop2ipf24.Model;
 
+import javafx.scene.control.Alert;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,12 @@ public class Showtime {
     }
 
     public void setTime(String pTime) {
-        this.aTime = pTime;
+        if (pTime.trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Time cannot be empty or only whitespace.");
+            alert.show();
+        } else {
+            this.aTime = pTime;
+        }
     }
 
     public String getDate() {
@@ -36,8 +43,12 @@ public class Showtime {
     }
 
     public void setDate(String pDate) {
-        this.aDate = pDate;
-    }
+        if (pDate.trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Date cannot be empty or only whitespace.");
+            alert.show();
+        } else {
+            this.aDate = pDate;
+        }    }
 
     public Movie getMovie() {
         return this.aMovie;
@@ -53,17 +64,5 @@ public class Showtime {
 
     public void setRoom(Room pRoom) {
         this.aRoom = pRoom;
-    }
-
-    public static void addShowtime(Showtime pShowtime) {
-        showtimes.add(pShowtime);
-    }
-
-    public List<Showtime> getShowtimes() {
-        return showtimes;
-    }
-
-    public Showtime getShowtimesListItem(int pIndex) {
-        return showtimes.get(pIndex);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.oop2ipf24.Model;
 
+import javafx.scene.control.Alert;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +23,11 @@ public class Movie {
     }
 
     public void setName(String pName) {
-        this.aName = pName;
-    }
-
-    public void addMovie(Movie pMovie) {
-        movies.add(pMovie);
-    }
-
-    public List<Movie> getMovies() {
-        return movies;
+        if (pName.trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Movie name cannot be empty or only whitespace.");
+            alert.show();
+        } else {
+            this.aName = pName;
+        }
     }
 }
