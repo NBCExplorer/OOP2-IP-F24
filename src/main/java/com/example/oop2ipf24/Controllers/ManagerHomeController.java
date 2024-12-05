@@ -3,6 +3,7 @@ package com.example.oop2ipf24.Controllers;
 import com.example.oop2ipf24.Model.Movie;
 import com.example.oop2ipf24.Model.Room;
 import com.example.oop2ipf24.Model.Showtime;
+import com.example.oop2ipf24.Model.User;
 import com.example.oop2ipf24.MovieApplication;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,10 +17,8 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class ManagerHomeController {
 
@@ -33,8 +32,12 @@ public class ManagerHomeController {
     private ListView<String> showListView;
 
     private final ObservableList<Showtime> showObservableList = FXCollections.observableArrayList();
-    private final ObservableList<Movie> movieObservableList = FXCollections.observableArrayList();
+    private ObservableList<Movie> movieObservableList = FXCollections.observableArrayList();
     private final ObservableList<Room> roomObservableList = FXCollections.observableArrayList();
+
+    public Map<String, Movie> movies = new HashMap<>();
+    public Map<String, Room> rooms = new HashMap<>();
+    public Map<String, Showtime> showtimes = new HashMap<>();
 
     @FXML
     private Button removeMovieButton; // Button to remove movies
@@ -69,8 +72,9 @@ public class ManagerHomeController {
 
     @FXML
     public void initialize() {
+
         // Set up the remove button to trigger the delete confirmation
-        removeMovieButton.setOnAction(event -> openDeleteConfirmationWindow());
+        removeMovieButton.setOnAction(event -> removeMovie());
 
         // Set up the add button to open the Add Movie window
         addMovieButton.setOnAction(event -> openAddMovieWindow());
@@ -213,6 +217,8 @@ public class ManagerHomeController {
                 stage.showAndWait();
 
                 movieList.getItems().set(selectedMovieIndex, selectedMovie.getName());
+                saveData();
+
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Movie edit error: " + e.getMessage());
                 alert.show();
@@ -306,6 +312,8 @@ public class ManagerHomeController {
                 stage.showAndWait();
 
                 roomList.getItems().set(selectedRoomIndex, selectedRoom.getRoomNumber());
+                saveData();
+
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Room edit error: " + e.getMessage());
                 alert.show();
@@ -335,6 +343,8 @@ public class ManagerHomeController {
                 stage.showAndWait();
 
                 showListView.getItems().set(selectedShowIndex, selectedShow.getDate());
+                saveData();
+
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Showtime edit error: " + e.getMessage());
                 alert.show();
@@ -371,19 +381,27 @@ public class ManagerHomeController {
         }
     }
 
-    // Micah
-    private void removeShow() {
-        int selectedIndex = showListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex != -1) {
-            Showtime removedShow = showObservableList.get(selectedIndex);
-            showObservableList.remove(removedShow);
-            showListView.getItems().remove(selectedIndex);
+    /**
+     *   Saves data for movies, rooms and showtimes to their respective files.
+      */
+    public void saveData() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("movies.dat"))) {
+            oos.writeObject(movies);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Showtime removed successfully.");
-            alert.show();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "No showtime selected to remove.");
-            alert.show();
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("rooms.dat"))) {
+            oos.writeObject(rooms);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("showtimes.dat"))) {
+            oos.writeObject(showtimes);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
+

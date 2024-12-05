@@ -48,7 +48,7 @@ public class ClientController {
 
         // Create example Movie and Room objects
         Movie exampleMovie = new Movie("Example Movie");
-        Room exampleRoom = new Room(1, "Example Room", "Description");
+        Room exampleRoom = new Room("1", "Example Room", "Description");
 
         ObservableList<Showtime> showtimes = FXCollections.observableArrayList(
                 new Showtime("10:00 AM", "2023-10-01", exampleMovie, exampleRoom),
