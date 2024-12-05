@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -20,12 +19,6 @@ public class ConfirmationController {
 
     @FXML
     private Label confirmationMessage;
-
-    @FXML
-    private Button confirmButton;
-
-    @FXML
-    private Button cancelButton;
 
     /**
      * Sets the client's email address in the confirmation message.
@@ -59,29 +52,17 @@ public class ConfirmationController {
      */
     private void navigateToClientView(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/oop2ipf24/client-view.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Client View");
             stage.setScene(new Scene(root));
             stage.show();
-
-            closeWindow(event);
-
         } catch (IOException e) {
             e.printStackTrace();
             showErrorAlert("Failed to load the Client View.");
         }
-    }
-
-    /**
-     * Closes the current window.
-     * @param event The event object.
-     */
-    private void closeWindow(ActionEvent event) {
-        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        stage.close();
     }
 
     /**
