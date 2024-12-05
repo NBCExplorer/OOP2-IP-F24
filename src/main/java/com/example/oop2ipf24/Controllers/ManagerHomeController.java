@@ -305,27 +305,32 @@ public class ManagerHomeController {
             FXMLLoader fxmlLoader = new FXMLLoader(MovieApplication.class.getResource("/com/example/oop2ipf24/showtime-view.fxml"));
             Parent root = fxmlLoader.load();
 
-            int selectedShowMovieIndex = movieList.getSelectionModel().getSelectedIndex();
-            Movie selectedShowMovie = movieObservableList.get(selectedShowMovieIndex);
+            try {
+                int selectedShowMovieIndex = movieList.getSelectionModel().getSelectedIndex();
+                Movie selectedShowMovie = movieObservableList.get(selectedShowMovieIndex);
 
-            int selectedShowRoomIndex = roomList.getSelectionModel().getSelectedIndex();
-            Room selectedShowRoom = roomObservableList.get(selectedShowRoomIndex);
+                int selectedShowRoomIndex = roomList.getSelectionModel().getSelectedIndex();
+                Room selectedShowRoom = roomObservableList.get(selectedShowRoomIndex);
 
+                showtimeController controller = fxmlLoader.getController();
+                Showtime newShow = new Showtime();
+                controller.setShow(newShow, selectedShowMovie, selectedShowRoom);
 
-            showtimeController controller = fxmlLoader.getController();
-            Showtime newShow = new Showtime();
-            controller.setShow(newShow, selectedShowMovie, selectedShowRoom);
+                Scene scene = new Scene(root, 320, 240);
+                Stage stage = new Stage();
+                stage.setTitle("Add Showtime");
+                stage.setScene(scene);
+                stage.showAndWait();
 
-            Scene scene = new Scene(root, 320, 240);
-            Stage stage = new Stage();
-            stage.setTitle("Add Showtime");
-            stage.setScene(scene);
-            stage.showAndWait();
-
-            if (newShow.getDate() != null && !newShow.getDate().isEmpty()) {
-                showObservableList.add(newShow);
-                showListView.getItems().add(newShow.getDate());
+                if (newShow.getDate() != null && !newShow.getDate().isEmpty()) {
+                    showObservableList.add(newShow);
+                    showListView.getItems().add(newShow.getDate());
+                }
+            } catch (IndexOutOfBoundsException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "You must select a movie and a room before adding a new showtime.");
+                alert.show();
             }
+
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Showtime addition error: " + e.getMessage());
             alert.show();
